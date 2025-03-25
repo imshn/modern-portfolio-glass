@@ -35,7 +35,7 @@ const Footer = () => {
             {/* Logo and about */}
             <div className="md:col-span-1">
               <Link to="/" className="text-xl font-bold inline-block mb-4">
-                <span className="text-shimmer">Aryan.dev</span>
+                <span className="text-shimmer">Shaan.dev</span>
               </Link>
               <p className="text-muted-foreground mb-4">
                 Software developer and data science student based in Chennai, India. 
@@ -107,7 +107,7 @@ const Footer = () => {
           {/* Copyright and social links */}
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <div className="text-center md:text-left text-muted-foreground text-sm">
-              © {new Date().getFullYear()} Aryan.dev. All rights reserved.
+              © {new Date().getFullYear()} Shaan.dev. All rights reserved.
             </div>
             
             <div className="flex gap-4">
