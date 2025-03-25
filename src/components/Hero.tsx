@@ -63,7 +63,7 @@ const Hero = () => {
             ref={headingRef} 
             className="text-4xl md:text-6xl font-bold leading-tight mb-6"
           >
-            {'Hi, I\'m Shaan'.split('').map((char, index) => (
+            {'Hi, I\'m Mohammed Shahnawaz'.split('').map((char, index) => (
               <span key={index} className="char inline-block animate-fade-in opacity-0">
                 {char === ' ' ? '\u00A0' : char}
               </span>
