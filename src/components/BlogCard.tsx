@@ -16,9 +16,10 @@ interface BlogCardProps {
   };
   className?: string;
   featured?: boolean;
+  style?: React.CSSProperties;
 }
 
-const BlogCard = ({ post, className, featured = false }: BlogCardProps) => {
+const BlogCard = ({ post, className, featured = false, style }: BlogCardProps) => {
   return (
     <div 
       className={cn(
@@ -26,6 +27,7 @@ const BlogCard = ({ post, className, featured = false }: BlogCardProps) => {
         featured ? "md:flex" : "",
         className
       )}
+      style={style}
     >
       {/* Image container */}
       <div className={cn(
