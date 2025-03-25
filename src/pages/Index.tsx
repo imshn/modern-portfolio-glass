@@ -1,13 +1,58 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+
+import { useEffect, useState } from 'react';
+import Navbar from '@/components/Navbar';
+import Hero from '@/components/Hero';
+import About from '@/components/About';
+import Skills from '@/components/Skills';
+import Projects from '@/components/Projects';
+import Contact from '@/components/Contact';
+import Footer from '@/components/Footer';
+import Loader from '@/components/Loader';
 
 const Index = () => {
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Set skill progress bars width on load
+  useEffect(() => {
+    const skillBars = document.querySelectorAll('[data-width]');
+    
+    setTimeout(() => {
+      skillBars.forEach(bar => {
+        const width = bar.getAttribute('data-width');
+        if (width) {
+          (bar as HTMLElement).style.width = width;
+        }
+      });
+    }, 1000);
+  }, []);
+
+  // Simulate loading
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1500);
+    
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-gray-600">Start building your amazing project here!</p>
+    <>
+      <Loader isLoading={isLoading} />
+      
+      <div className="min-h-screen flex flex-col">
+        <Navbar />
+        
+        <main className="flex-grow">
+          <Hero />
+          <About />
+          <Skills />
+          <Projects />
+          <Contact />
+        </main>
+        
+        <Footer />
       </div>
-    </div>
+    </>
   );
 };
 
