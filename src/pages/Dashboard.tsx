@@ -132,7 +132,7 @@ const Dashboard = () => {
                   
                   <div className="space-y-2">
                     <Label htmlFor="blog-content">Content</Label>
-                    <div className="min-h-[300px]">
+                    <div className="min-h-[350px]">
                       <TextEditor 
                         value={blogContent}
                         onChange={setBlogContent}

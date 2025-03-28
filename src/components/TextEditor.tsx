@@ -1,6 +1,7 @@
 
 import { useRef } from 'react';
-import { Editor } from '@tinymce/tinymce-react';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 interface TextEditorProps {
   value: string;
@@ -9,29 +10,39 @@ interface TextEditorProps {
 }
 
 const TextEditor = ({ value, onChange, className }: TextEditorProps) => {
-  const editorRef = useRef<any>(null);
+  const quillRef = useRef<ReactQuill>(null);
+
+  const modules = {
+    toolbar: [
+      [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+      ['bold', 'italic', 'underline', 'strike'],
+      [{ 'color': [] }, { 'background': [] }],
+      [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+      [{ 'align': [] }],
+      ['link', 'image', 'video'],
+      ['clean']
+    ],
+  };
+
+  const formats = [
+    'header',
+    'bold', 'italic', 'underline', 'strike',
+    'color', 'background',
+    'list', 'bullet',
+    'align',
+    'link', 'image', 'video'
+  ];
 
   return (
     <div className={className}>
-      <Editor
-        apiKey="your-api-key" // You can get a free API key from TinyMCE
-        onInit={(evt, editor) => editorRef.current = editor}
-        initialValue={value}
-        onEditorChange={(newValue) => onChange(newValue)}
-        init={{
-          height: 500,
-          menubar: false,
-          plugins: [
-            'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 
-            'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
-            'insertdatetime', 'media', 'table', 'preview', 'help', 'wordcount'
-          ],
-          toolbar: 'undo redo | blocks | ' +
-            'bold italic forecolor | alignleft aligncenter ' +
-            'alignright alignjustify | bullist numlist outdent indent | ' +
-            'removeformat | help',
-          content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
-        }}
+      <ReactQuill
+        ref={quillRef}
+        theme="snow"
+        value={value}
+        onChange={onChange}
+        modules={modules}
+        formats={formats}
+        style={{ height: '300px', marginBottom: '50px' }}
       />
     </div>
   );
