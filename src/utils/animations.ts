@@ -29,6 +29,9 @@ export const setupScrollReveal = (
       if (entry.isIntersecting) {
         entry.target.classList.add('animate-fade-in');
         entry.target.classList.remove('opacity-0');
+        // Ensure animations stick after they complete
+        const el = entry.target as HTMLElement;
+        el.style.animationFillMode = 'forwards';
         observer.unobserve(entry.target);
       }
     });
@@ -60,6 +63,7 @@ export const setupTextAnimation = (element: HTMLElement | null) => {
     const span = document.createElement('span');
     span.className = 'char inline-block animate-fade-in opacity-0';
     span.style.animationDelay = `${index * 0.05}s`;
+    span.style.animationFillMode = 'forwards'; // Make sure characters remain visible
     span.textContent = char === ' ' ? '\u00A0' : char;
     element.appendChild(span);
   });

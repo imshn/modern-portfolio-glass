@@ -7,7 +7,6 @@ import Skills from '@/components/Skills';
 import Projects from '@/components/Projects';
 import Contact from '@/components/Contact';
 import Footer from '@/components/Footer';
-import Loader from '@/components/Loader';
 import { setupScrollReveal, animateSkillBars } from '@/utils/animations';
 
 const Index = () => {
@@ -16,6 +15,13 @@ const Index = () => {
   // Fix section animations and set skill progress bars width on load
   useEffect(() => {
     if (!isLoaded.current) {
+      // Ensure all animations have fill-mode forwards
+      document.querySelectorAll('.animate-fade-in').forEach(el => {
+        if (el instanceof HTMLElement) {
+          el.style.animationFillMode = 'forwards';
+        }
+      });
+      
       // Animate skill bars after a delay
       animateSkillBars();
       

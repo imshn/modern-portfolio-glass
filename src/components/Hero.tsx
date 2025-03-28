@@ -14,6 +14,8 @@ const Hero = () => {
       chars.forEach((char, i) => {
         const el = char as HTMLElement;
         el.style.animationDelay = `${i * 0.05}s`;
+        // Make sure characters remain visible after animation
+        el.style.animationFillMode = 'forwards';
       });
     }
   }, []);
@@ -64,19 +66,19 @@ const Hero = () => {
             className="text-4xl md:text-6xl font-bold leading-tight mb-6"
           >
             {'Hi, I\'m Mohammed Shahnawaz'.split('').map((char, index) => (
-              <span key={index} className="char inline-block animate-fade-in opacity-0">
+              <span key={index} className="char inline-block opacity-0 animate-fade-in" style={{animationFillMode: 'forwards'}}>
                 {char === ' ' ? '\u00A0' : char}
               </span>
             ))}
             <div className="h-1.5 w-12 bg-primary rounded-full mx-auto mt-2"></div>
           </h1>
           
-          <p className="text-xl text-muted-foreground mb-8 animate-fade-in opacity-0 [animation-delay:0.5s] [animation-fill-mode:forwards] max-w-2xl mx-auto text-balance">
+          <p className="text-xl text-muted-foreground mb-8 animate-fade-in opacity-0" style={{animationDelay: '0.5s', animationFillMode: 'forwards'}}>
             Building elegant software solutions and exploring data science at IIT Madras. 
             Passionate about creating meaningful digital experiences that solve real problems.
           </p>
           
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-in opacity-0 [animation-delay:0.7s] [animation-fill-mode:forwards]">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-in opacity-0" style={{animationDelay: '0.7s', animationFillMode: 'forwards'}}>
             <Button className="glass-card bg-primary/90 hover:bg-primary text-white flex items-center gap-2 transition-all duration-300 px-6 py-6">
               <span>View My Work</span>
               <ArrowRight className="h-4 w-4" />
@@ -88,7 +90,7 @@ const Hero = () => {
             </Button>
           </div>
           
-          <div className="mt-12 flex items-center justify-center gap-6 animate-fade-in opacity-0 [animation-delay:0.9s] [animation-fill-mode:forwards]">
+          <div className="mt-12 flex items-center justify-center gap-6 animate-fade-in opacity-0" style={{animationDelay: '0.9s', animationFillMode: 'forwards'}}>
             <a 
               href="https://github.com" 
               target="_blank" 
