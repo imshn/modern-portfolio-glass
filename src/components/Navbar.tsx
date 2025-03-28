@@ -16,7 +16,6 @@ const Navbar = () => {
     { name: 'Skills', href: '/#skills' },
     { name: 'Projects', href: '/#projects' },
     { name: 'Blog', href: '/blog' },
-    { name: 'Dashboard', href: '/dashboard' },
     { name: 'Contact', href: '/#contact' },
   ];
 
@@ -48,6 +47,26 @@ const Navbar = () => {
     setIsMobileMenuOpen(false);
   }, [location]);
 
+  // Handle smooth scrolling for anchor links
+  const handleAnchorClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    if (href.includes('#')) {
+      e.preventDefault();
+      const [basePath, hash] = href.split('#');
+      
+      // Only handle if we're on the same base path
+      if (location.pathname === basePath || (basePath === '/' && location.pathname === '/')) {
+        const element = document.getElementById(hash);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+          window.history.pushState(null, '', href);
+        }
+      } else {
+        // Navigate to the page first, then we'll scroll on load
+        window.location.href = href;
+      }
+    }
+  };
+
   return (
     <header
       className={cn(
@@ -74,6 +93,7 @@ const Navbar = () => {
             <Link
               key={link.name}
               to={link.href}
+              onClick={(e) => handleAnchorClick(e, link.href)}
               className={cn(
                 "nav-link",
                 isActive(link.href) && "text-primary after:scale-x-100"
@@ -110,6 +130,7 @@ const Navbar = () => {
             <Link
               key={link.name}
               to={link.href}
+              onClick={(e) => handleAnchorClick(e, link.href)}
               className={cn(
                 "text-lg font-medium transition-colors hover:text-primary",
                 isActive(link.href) && "text-primary"

@@ -1,5 +1,5 @@
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
 import About from '@/components/About';
@@ -8,51 +8,56 @@ import Projects from '@/components/Projects';
 import Contact from '@/components/Contact';
 import Footer from '@/components/Footer';
 import Loader from '@/components/Loader';
+import { setupScrollReveal, animateSkillBars } from '@/utils/animations';
 
 const Index = () => {
-  const [isLoading, setIsLoading] = useState(true);
+  const isLoaded = useRef(false);
 
-  // Set skill progress bars width on load
+  // Fix section animations and set skill progress bars width on load
   useEffect(() => {
-    const skillBars = document.querySelectorAll('[data-width]');
-    
-    setTimeout(() => {
-      skillBars.forEach(bar => {
-        const width = bar.getAttribute('data-width');
-        if (width) {
-          (bar as HTMLElement).style.width = width;
+    if (!isLoaded.current) {
+      // Animate skill bars after a delay
+      animateSkillBars();
+      
+      // Set up scroll reveal animations for elements
+      const observer = setupScrollReveal();
+      
+      // Check if hash in URL to scroll to section
+      if (window.location.hash) {
+        const id = window.location.hash.substring(1);
+        const element = document.getElementById(id);
+        if (element) {
+          setTimeout(() => {
+            element.scrollIntoView({ behavior: 'smooth' });
+          }, 1000); // Small delay to ensure elements are loaded
         }
-      });
-    }, 1000);
-  }, []);
-
-  // Simulate loading
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 1500);
-    
-    return () => clearTimeout(timer);
+      }
+      
+      isLoaded.current = true;
+      
+      return () => {
+        if (observer) {
+          // Clean up the observer
+          observer.disconnect();
+        }
+      };
+    }
   }, []);
 
   return (
-    <>
-      <Loader isLoading={isLoading} />
+    <div className="min-h-screen flex flex-col">
+      <Navbar />
       
-      <div className="min-h-screen flex flex-col">
-        <Navbar />
-        
-        <main className="flex-grow">
-          <Hero />
-          <About />
-          <Skills />
-          <Projects />
-          <Contact />
-        </main>
-        
-        <Footer />
-      </div>
-    </>
+      <main className="flex-grow">
+        <Hero />
+        <About />
+        <Skills />
+        <Projects />
+        <Contact />
+      </main>
+      
+      <Footer />
+    </div>
   );
 };
 

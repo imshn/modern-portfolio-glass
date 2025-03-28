@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -10,7 +9,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Separator } from '@/components/ui/separator';
 import { toast } from '@/components/ui/use-toast';
 import { useBlogContext } from '@/context/BlogContext';
-import { FileUpload, Image, Link, Tag, Save, Trash } from 'lucide-react';
+import { FileUp, Image, Link, Tag, Save, Trash } from 'lucide-react';
 import TextEditor from '@/components/TextEditor';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
@@ -133,14 +132,10 @@ const Dashboard = () => {
                   
                   <div className="space-y-2">
                     <Label htmlFor="blog-content">Content</Label>
-                    <div className="min-h-[300px] border rounded-md p-4">
-                      <Textarea 
-                        id="blog-content" 
+                    <div className="min-h-[300px]">
+                      <TextEditor 
                         value={blogContent}
-                        onChange={(e) => setBlogContent(e.target.value)}
-                        placeholder="Write your blog content here..."
-                        className="min-h-[280px]"
-                        required
+                        onChange={setBlogContent}
                       />
                     </div>
                   </div>
