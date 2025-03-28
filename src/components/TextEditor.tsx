@@ -74,108 +74,156 @@ const TextEditor = ({ value, onChange, className }: TextEditorProps) => {
         <Button 
           variant="ghost" 
           size="sm" 
-          onClick={() => execCommand('bold')}
+          onClick={(e) => {
+            e.preventDefault(); // Prevent form submission
+            execCommand('bold');
+          }}
           className="p-1 h-8 w-8"
           title="Bold"
+          type="button" // Explicitly set type to button
         >
           <Bold className="h-4 w-4" />
         </Button>
         <Button 
           variant="ghost" 
           size="sm" 
-          onClick={() => execCommand('italic')}
+          onClick={(e) => {
+            e.preventDefault();
+            execCommand('italic');
+          }}
           className="p-1 h-8 w-8"
           title="Italic"
+          type="button"
         >
           <Italic className="h-4 w-4" />
         </Button>
         <Button 
           variant="ghost" 
           size="sm" 
-          onClick={() => execCommand('formatBlock', '<h1>')}
+          onClick={(e) => {
+            e.preventDefault();
+            execCommand('formatBlock', '<h1>');
+          }}
           className="p-1 h-8 w-8"
           title="Heading 1"
+          type="button"
         >
           <Heading1 className="h-4 w-4" />
         </Button>
         <Button 
           variant="ghost" 
           size="sm" 
-          onClick={() => execCommand('formatBlock', '<h2>')}
+          onClick={(e) => {
+            e.preventDefault();
+            execCommand('formatBlock', '<h2>');
+          }}
           className="p-1 h-8 w-8"
           title="Heading 2"
+          type="button"
         >
           <Heading2 className="h-4 w-4" />
         </Button>
         <Button 
           variant="ghost" 
           size="sm" 
-          onClick={() => execCommand('insertOrderedList')}
+          onClick={(e) => {
+            e.preventDefault();
+            execCommand('insertOrderedList');
+          }}
           className="p-1 h-8 w-8"
           title="Ordered List"
+          type="button"
         >
           <List className="h-4 w-4" />
         </Button>
         <Button 
           variant="ghost" 
           size="sm" 
-          onClick={() => execCommand('formatBlock', '<blockquote>')}
+          onClick={(e) => {
+            e.preventDefault();
+            execCommand('formatBlock', '<blockquote>');
+          }}
           className="p-1 h-8 w-8"
           title="Quote"
+          type="button"
         >
           <Quote className="h-4 w-4" />
         </Button>
         <Button 
           variant="ghost" 
           size="sm" 
-          onClick={handleLinkInsert}
+          onClick={(e) => {
+            e.preventDefault();
+            handleLinkInsert();
+          }}
           className="p-1 h-8 w-8"
           title="Insert Link"
+          type="button"
         >
           <LinkIcon className="h-4 w-4" />
         </Button>
         <Button 
           variant="ghost" 
           size="sm" 
-          onClick={handleImageUpload}
+          onClick={(e) => {
+            e.preventDefault();
+            handleImageUpload();
+          }}
           className="p-1 h-8 w-8"
           title="Insert Image"
+          type="button"
         >
           <ImageIcon className="h-4 w-4" />
         </Button>
         <Button 
           variant="ghost" 
           size="sm" 
-          onClick={() => execCommand('formatBlock', '<pre>')}
+          onClick={(e) => {
+            e.preventDefault();
+            execCommand('formatBlock', '<pre>');
+          }}
           className="p-1 h-8 w-8"
           title="Code Block"
+          type="button"
         >
           <Code className="h-4 w-4" />
         </Button>
         <Button 
           variant="ghost" 
           size="sm" 
-          onClick={() => execCommand('justifyLeft')}
+          onClick={(e) => {
+            e.preventDefault();
+            execCommand('justifyLeft');
+          }}
           className="p-1 h-8 w-8"
           title="Align Left"
+          type="button"
         >
           <AlignLeft className="h-4 w-4" />
         </Button>
         <Button 
           variant="ghost" 
           size="sm" 
-          onClick={() => execCommand('justifyCenter')}
+          onClick={(e) => {
+            e.preventDefault();
+            execCommand('justifyCenter');
+          }}
           className="p-1 h-8 w-8"
           title="Align Center"
+          type="button"
         >
           <AlignCenter className="h-4 w-4" />
         </Button>
         <Button 
           variant="ghost" 
           size="sm" 
-          onClick={() => execCommand('justifyRight')}
+          onClick={(e) => {
+            e.preventDefault();
+            execCommand('justifyRight');
+          }}
           className="p-1 h-8 w-8"
           title="Align Right"
+          type="button"
         >
           <AlignRight className="h-4 w-4" />
         </Button>

@@ -1,118 +1,27 @@
 
 import { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
-import { Calendar, Clock, ArrowLeft, User, Tag, Share2 } from 'lucide-react';
+import { Link, useParams, useNavigate } from 'react-router-dom';
+import { Calendar, Clock, ArrowLeft, User, Tag } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import Loader from '@/components/Loader';
 import BlogCard from '@/components/BlogCard';
 import { Button } from '@/components/ui/button';
-
-// Sample blog post data
-const blogPost = {
-  id: '1',
-  title: 'Understanding Data Visualization Techniques',
-  content: `
-    <p>Data visualization is a powerful tool for understanding complex information at a glance. In this article, we'll explore various techniques for effectively visualizing data to communicate insights clearly.</p>
-    
-    <h2>Why Data Visualization Matters</h2>
-    <p>In the age of big data, the ability to transform raw numbers into meaningful visuals is essential. Effective data visualization can:</p>
-    <ul>
-      <li>Simplify complex information</li>
-      <li>Highlight patterns and trends</li>
-      <li>Support decision-making processes</li>
-      <li>Make data more accessible to non-technical stakeholders</li>
-    </ul>
-    
-    <h2>Choosing the Right Visualization</h2>
-    <p>Different visualization techniques serve different purposes. Here are some common types and when to use them:</p>
-    
-    <h3>Bar Charts</h3>
-    <p>Bar charts are excellent for comparing discrete categories. They work well when you need to show the relationship between a category and a numeric value.</p>
-    
-    <h3>Line Charts</h3>
-    <p>Line charts excel at showing trends over time. They're particularly useful for displaying continuous data and identifying patterns or anomalies in temporal data.</p>
-    
-    <h3>Scatter Plots</h3>
-    <p>Scatter plots are ideal for examining the relationship between two variables. They help identify correlations, clusters, and outliers in your dataset.</p>
-    
-    <h3>Pie Charts</h3>
-    <p>While often overused, pie charts can be effective for showing proportions of a whole when there are few categories (ideally 5 or fewer).</p>
-    
-    <h2>Best Practices for Data Visualization</h2>
-    <p>Creating effective visualizations involves more than just choosing the right chart type. Consider these best practices:</p>
-    
-    <ul>
-      <li><strong>Simplicity:</strong> Avoid cluttering your visualizations with unnecessary elements.</li>
-      <li><strong>Accuracy:</strong> Ensure your visualization accurately represents the underlying data.</li>
-      <li><strong>Context:</strong> Provide sufficient context to help viewers understand what they're seeing.</li>
-      <li><strong>Accessibility:</strong> Use color combinations that are distinguishable by people with color vision deficiencies.</li>
-      <li><strong>Consistency:</strong> Maintain consistent scales, colors, and formatting across related visualizations.</li>
-    </ul>
-    
-    <h2>Tools for Data Visualization</h2>
-    <p>There are numerous tools available for creating data visualizations, from programming libraries to user-friendly applications:</p>
-    
-    <ul>
-      <li><strong>Programming Libraries:</strong> D3.js, Matplotlib, ggplot2</li>
-      <li><strong>Business Intelligence Tools:</strong> Tableau, Power BI, Looker</li>
-      <li><strong>Online Platforms:</strong> Flourish, Datawrapper, Google Data Studio</li>
-      <li><strong>Spreadsheet Software:</strong> Excel, Google Sheets</li>
-    </ul>
-    
-    <h2>Conclusion</h2>
-    <p>Effective data visualization is both an art and a science. By understanding the strengths and limitations of different visualization techniques and following best practices, you can create compelling visuals that effectively communicate your data's story.</p>
-    
-    <p>In the next article, we'll dive deeper into advanced visualization techniques for specific types of data.</p>
-  `,
-  date: 'April 15, 2023',
-  author: 'Aryan',
-  readTime: '6 min read',
-  image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070',
-  tags: ['Data Science', 'Visualization', 'Tutorial'],
-  slug: 'understanding-data-visualization-techniques'
-};
-
-// Sample related posts
-const relatedPosts = [
-  {
-    id: '2',
-    title: 'Building a Full-Stack Application with Next.js and Node',
-    excerpt: 'Step by step tutorial on creating a modern web application using Next.js for the frontend and Node.js for the backend.',
-    date: 'March 22, 2023',
-    readTime: '10 min read',
-    image: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=2070',
-    tags: ['Web Development', 'Next.js', 'Node.js'],
-    slug: 'building-full-stack-application-nextjs-node'
-  },
-  {
-    id: '3',
-    title: 'Introduction to Machine Learning for Beginners',
-    excerpt: 'A beginner-friendly introduction to machine learning concepts and applications. Learn the basics of ML algorithms and how to get started.',
-    date: 'February 18, 2023',
-    readTime: '8 min read',
-    image: 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?q=80&w=2070',
-    tags: ['Machine Learning', 'AI', 'Beginners'],
-    slug: 'introduction-machine-learning-beginners'
-  },
-  {
-    id: '4',
-    title: 'The Future of Software Development: Trends to Watch',
-    excerpt: 'Exploring emerging trends in software development and how they will shape the industry in the coming years.',
-    date: 'January 5, 2023',
-    readTime: '5 min read',
-    image: 'https://images.unsplash.com/photo-1571171637578-41bc2dd41cd2?q=80&w=2070',
-    tags: ['Software Development', 'Trends', 'Future Tech'],
-    slug: 'future-software-development-trends'
-  }
-];
+import { useBlogContext } from '@/context/BlogContext';
 
 const BlogPost = () => {
   const [isLoading, setIsLoading] = useState(true);
   const { slug } = useParams<{ slug: string }>();
+  const navigate = useNavigate();
+  const { blogPosts } = useBlogContext();
   
-  // In a real application, we would fetch the blog post data
-  // based on the slug parameter, but for this example we'll use the sample data
+  // Find the current blog post based on slug
+  const blogPost = blogPosts.find(post => post.slug === slug);
+  
+  // Get related posts (excluding current post)
+  const relatedPosts = blogPosts
+    .filter(post => post.slug !== slug)
+    .slice(0, 3);
   
   // Simulate loading
   useEffect(() => {
@@ -124,6 +33,17 @@ const BlogPost = () => {
     
     return () => clearTimeout(timer);
   }, [slug]);
+
+  // If blog post not found, redirect to blog list
+  useEffect(() => {
+    if (!isLoading && !blogPost) {
+      navigate('/blog');
+    }
+  }, [blogPost, isLoading, navigate]);
+
+  if (isLoading || !blogPost) {
+    return <Loader isLoading={true} />;
+  }
 
   return (
     <>
@@ -153,7 +73,7 @@ const BlogPost = () => {
                 </Link>
                 
                 {/* Post metadata */}
-                <div className="mb-6 space-y-2 animate-fade-in">
+                <div className="mb-6 space-y-2 animate-fade-in" style={{animationFillMode: 'forwards'}}>
                   <div className="flex flex-wrap gap-2">
                     {blogPost.tags.map(tag => (
                       <span key={tag} className="text-xs px-2 py-1 rounded-full bg-primary/10 text-primary">
@@ -181,7 +101,7 @@ const BlogPost = () => {
                 </div>
                 
                 {/* Featured image */}
-                <div className="mb-8 rounded-xl overflow-hidden glass-card animate-fade-in" style={{ animationDelay: '0.2s' }}>
+                <div className="mb-8 rounded-xl overflow-hidden glass-card animate-fade-in" style={{ animationDelay: '0.2s', animationFillMode: 'forwards' }}>
                   <img 
                     src={blogPost.image} 
                     alt={blogPost.title} 
@@ -196,12 +116,12 @@ const BlogPost = () => {
           <section className="py-8 pb-16">
             <div className="container mx-auto px-4">
               <div className="max-w-3xl mx-auto">
-                <article className="prose prose-lg max-w-none animate-fade-in" style={{ animationDelay: '0.3s' }}>
+                <article className="prose prose-lg max-w-none animate-fade-in" style={{ animationDelay: '0.3s', animationFillMode: 'forwards' }}>
                   <div dangerouslySetInnerHTML={{ __html: blogPost.content }} />
                 </article>
                 
                 {/* Share buttons */}
-                <div className="mt-12 pt-6 border-t border-border animate-fade-in" style={{ animationDelay: '0.4s' }}>
+                <div className="mt-12 pt-6 border-t border-border animate-fade-in" style={{ animationDelay: '0.4s', animationFillMode: 'forwards' }}>
                   <div className="flex flex-wrap items-center justify-between gap-4">
                     <div className="flex items-center gap-2">
                       <span className="text-sm font-medium">Share this article:</span>
@@ -249,7 +169,7 @@ const BlogPost = () => {
           <section className="py-16 bg-secondary/50">
             <div className="container mx-auto px-4">
               <div className="max-w-6xl mx-auto">
-                <h2 className="text-2xl font-bold mb-8 animate-fade-in" style={{ animationDelay: '0.5s' }}>Related Articles</h2>
+                <h2 className="text-2xl font-bold mb-8 animate-fade-in" style={{ animationDelay: '0.5s', animationFillMode: 'forwards' }}>Related Articles</h2>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {relatedPosts.map((post, index) => (
@@ -257,7 +177,7 @@ const BlogPost = () => {
                       key={post.id} 
                       post={post}
                       className="animate-fade-in" 
-                      style={{ animationDelay: `${0.6 + index * 0.1}s` }}
+                      style={{ animationDelay: `${0.6 + index * 0.1}s`, animationFillMode: 'forwards' }}
                     />
                   ))}
                 </div>
