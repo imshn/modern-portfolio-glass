@@ -45,7 +45,7 @@ const Dashboard = () => {
       content: blogContent,
       date: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
       author: 'Shaan',
-      readTime: `${Math.max(1, Math.ceil(blogContent.length / 1000))} min read`,
+      readTime: `${Math.max(1, Math.ceil(blogContent.replace(/<[^>]*>/g, '').length / 1000))} min read`,
       image: blogImage || 'https://images.unsplash.com/photo-1499750310107-5fef28a66643',
       tags: blogTags.split(',').map(tag => tag.trim()),
       slug: blogTitle.toLowerCase().replace(/[^\w\s]/gi, '').replace(/\s+/g, '-')
