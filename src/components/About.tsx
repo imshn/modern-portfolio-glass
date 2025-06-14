@@ -51,9 +51,11 @@ const About = () => {
             <div className="w-full md:w-1/2 animate-on-scroll" style={{ animationDelay: '0.2s' }}>
               <div className="relative">
                 <div className="aspect-square rounded-xl overflow-hidden glass-card">
-                  <div className="w-full h-full bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center">
-                    <span className="text-4xl font-light">A</span>
-                  </div>
+                  <img 
+                    src="/lovable-uploads/336ddc1f-79a9-49fe-86bf-260124f36ab5.png" 
+                    alt="Profile" 
+                    className="w-full h-full object-cover"
+                  />
                 </div>
                 <div className="absolute -z-10 top-5 left-5 w-full h-full rounded-xl border border-primary/20 bg-primary/5"></div>
                 
