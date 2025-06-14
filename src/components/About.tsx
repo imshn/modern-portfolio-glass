@@ -54,7 +54,11 @@ const About = () => {
                   <img 
                     src="/lovable-uploads/336ddc1f-79a9-49fe-86bf-260124f36ab5.png" 
                     alt="Profile" 
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover object-center"
+                    style={{ 
+                      imageRendering: 'crisp-edges',
+                      filter: 'contrast(1.1) brightness(1.05)'
+                    }}
                   />
                 </div>
                 <div className="absolute -z-10 top-5 left-5 w-full h-full rounded-xl border border-primary/20 bg-primary/5"></div>
